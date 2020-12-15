@@ -2,10 +2,11 @@ package com.msiazn.kotlinbirthday
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.msiazn.kotlinbirthday.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SingleItemAdapter.onSingleItemClickListener {
 
     private lateinit var binding:ActivityMainBinding
 
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dataList = generateDummyDataForRecyclerView(500)
-        binding.recyclerView.adapter = SingleItemAdapter(dataList)
+        binding.recyclerView.adapter = SingleItemAdapter(dataList,this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(true)
     }
@@ -35,5 +36,9 @@ class MainActivity : AppCompatActivity() {
             list += item
         }
         return list
+    }
+
+    override fun onSingleItemClick(position: Int) {
+        Toast.makeText(this,"Clicked on item no $position ",Toast.LENGTH_SHORT).show()
     }
 }
